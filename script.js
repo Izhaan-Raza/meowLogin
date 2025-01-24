@@ -1,9 +1,9 @@
-// Generate random pattern points
+
 let captchaRefreshInterval;
 
 
 function stopCaptchaRefresh() {
-  clearInterval(captchaRefreshInterval); // Stops the interval
+  clearInterval(captchaRefreshInterval); 
 }
 
 function generatePattern() {
@@ -12,7 +12,7 @@ function generatePattern() {
   const cellSize = 200 / gridSize;
   const padding = cellSize / 3;
   
-  // Generate 4-6 points
+  
   const numPoints = Math.floor(Math.random() * 3) + 4;
   
   while (points.length < numPoints) {
@@ -23,7 +23,7 @@ function generatePattern() {
       y: y * cellSize + cellSize / 2
     };
     
-    // Check if point is too close to existing points
+    
     const isTooClose = points.some(p => 
       Math.sqrt(Math.pow(p.x - point.x, 2) + Math.pow(p.y - point.y, 2)) < padding
     );
@@ -36,15 +36,15 @@ function generatePattern() {
   return points;
 }
 
-// Draw pattern on canvas
+
 function drawPattern(points) {
   const canvas = document.getElementById('patternCanvas');
   const ctx = canvas.getContext('2d');
   
-  // Clear canvas
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-  // Draw grid
+  
   ctx.strokeStyle = '#e5e7eb';
   ctx.lineWidth = 1;
   
@@ -63,7 +63,7 @@ function drawPattern(points) {
     ctx.stroke();
   }
   
-  // Draw lines between points
+  
   ctx.strokeStyle = '#4f46e5';
   ctx.lineWidth = 2;
   
@@ -74,14 +74,14 @@ function drawPattern(points) {
   }
   ctx.stroke();
   
-  // Draw points
+  
   ctx.fillStyle = '#4f46e5';
   points.forEach((point, index) => {
     ctx.beginPath();
     ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
     ctx.fill();
     
-    // Add number labels to points
+    
     ctx.fillStyle = 'white';
     ctx.font = '10px Inter';
     ctx.textAlign = 'center';
@@ -90,7 +90,7 @@ function drawPattern(points) {
   });
 }
 
-// Setup drawing canvas
+
 function setupDrawCanvas() {
   const canvas = document.getElementById('drawCanvas');
   const ctx = canvas.getContext('2d');
@@ -144,7 +144,7 @@ function setupDrawCanvas() {
     validatePattern(points);
   }
   
-  // Mouse events
+  
   canvas.addEventListener('mousedown', (e) => {
     e.preventDefault();
     startDrawing(getMousePos(e));
@@ -158,7 +158,7 @@ function setupDrawCanvas() {
   canvas.addEventListener('mouseup', stopDrawing);
   canvas.addEventListener('mouseout', stopDrawing);
   
-  // Touch events
+  
   canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
     startDrawing(getTouchPos(e));
@@ -172,10 +172,10 @@ function setupDrawCanvas() {
   canvas.addEventListener('touchend', stopDrawing);
 }
 
-// Validate drawn pattern against original
+
 function validatePattern(drawnPoints) {
   const similarity = calculatePatternSimilarity(drawnPoints, currentPattern);
-  const threshold = 0.75; // Adjust this value to make validation more/less strict
+  const threshold = 0.75; 
   
   if (similarity >= threshold) {
     document.getElementById('error').textContent = '';
@@ -189,14 +189,14 @@ function validatePattern(drawnPoints) {
   }
 }
 
-// Calculate similarity between patterns
+
 function calculatePatternSimilarity(drawn, original) {
-  // Simplify drawn points to match original pattern length
+  
   const simplifiedDrawn = simplifyPoints(drawn, original.length);
   
-  // Calculate average distance between corresponding points
+  
   let totalDistance = 0;
-  const maxDistance = Math.sqrt(Math.pow(200, 2) + Math.pow(200, 2)); // diagonal of canvas
+  const maxDistance = Math.sqrt(Math.pow(200, 2) + Math.pow(200, 2)); 
   
   simplifiedDrawn.forEach((point, i) => {
     const distance = Math.sqrt(
@@ -210,7 +210,7 @@ function calculatePatternSimilarity(drawn, original) {
   return 1 - (averageDistance / maxDistance);
 }
 
-// Simplify array of points to desired length
+
 function simplifyPoints(points, targetLength) {
   const step = (points.length - 1) / (targetLength - 1);
   const simplified = [];
@@ -223,7 +223,7 @@ function simplifyPoints(points, targetLength) {
   return simplified;
 }
 
-// Initialize captcha
+
 let currentPattern = [];
 
 function refreshCaptcha() {
@@ -235,37 +235,37 @@ function refreshCaptcha() {
   ctx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
 }
 function setupAutoRefreshCaptcha() {
-  // Start auto-refresh
+  
   captchaRefreshInterval = setInterval(refreshCaptcha, 1500);
 }
 
-// Form handling
+
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('loginForm');
   const submitBtn = document.getElementById('submitBtn');
   const errorDiv = document.getElementById('error');
   const refreshBtn = document.getElementById('refreshCaptcha');
-  const stabilizeBtn = document.getElementById('stabilizeCaptcha'); // Hidden button
+  const stabilizeBtn = document.getElementById('stabilizeCaptcha'); 
   
-  // Setup drawing canvas
+  
   setupDrawCanvas();
   
-  // Initial captcha
+  
   refreshCaptcha();
   setupAutoRefreshCaptcha();
   
-  // Refresh button handler
+  
   refreshBtn.addEventListener('click', refreshCaptcha);
 
 
-  // Stabilize captcha button handler
+  
   stabilizeBtn.addEventListener('click', () => {
     stopCaptchaRefresh();
-    stabilizeBtn.style.display = 'none'; // Hide the button after it's used
+    stabilizeBtn.style.display = 'none'; 
     alert('Captcha stabilized.');
   });
   
-  // Form submission
+  
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     errorDiv.textContent = '';
@@ -284,11 +284,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
     
-    // Simulate loading state
+    
     submitBtn.disabled = true;
     submitBtn.textContent = 'Signing in...';
     
-    // Simulate API call
+    
     setTimeout(() => {
       alert('Login successful!');
       window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
