@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     setTimeout(() => {
       alert('Login successful!');
-      window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+      window.location.href = 'https://izhaan-raza.github.io/dumbathon_2025/';
 
       submitBtn.disabled = false;
       submitBtn.textContent = 'Sign In';
